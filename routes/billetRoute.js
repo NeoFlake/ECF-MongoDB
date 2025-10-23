@@ -445,21 +445,31 @@ router.get(`${ROADS.TAUX_ANNULATION}`, async (req, res) => {
         const tauxAnnulation = await Billet.aggregate([
             {
                 $group: {
-                    _id: null,
-                    totalCountBillet: { $sum: 1 }
+                    _id: "$statut",
+                    countPerStatut: { $sum: 1 }
                 }
             },  
             {
                 $group: {
-                    _id: "$statut",
-                    countPerStatut: { $sum: 1 }
+                    _id: null,
+                    totalCount: { $sum: "$countPerStatut" },
+                    countAnnules: {
+                        $sum: {
+                            $cond: [{ $eq: ["$_id", STATUT_BILLET.ANNULE] }, "$countPerStatut", 0]
+                        }
+                    }
                 }
             },
             {
                 $project: {
                     _id: 0,
-                    statut: "$_id",
-                    pourcentage: (countPerStatut/totalCountBillet * 100)
+                    tauxAnnulation: {
+                        $multiply: [
+                            {
+                                $divide: ["$countAnnules", "$totalCount"]
+                            }, 100
+                        ]
+                    }
                 }
             }
         ]);
