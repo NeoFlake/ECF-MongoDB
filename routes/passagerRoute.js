@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Passager from "../models/Passager.js";
 import { now } from "mongoose";
+import { ROADS } from "../constantes/roads.js";
 
 const router = Router();
 
@@ -97,8 +98,8 @@ router.get(`${ROADS.ENREGISTRE}`, async (req, res) => {
     }
 });
 
-// Route pour renvoyer les passagers enregistrée dans le mois ainsi que leur nombre total -> getByPassagerEnregistreAndCount()
-router.get(`${ROADS.ENREGISTRE}`, async (req, res) => {
+// Route pour renvoyer les passagers enregistrée dans le mois ainsi que leur nombre total -> getByPassagerDuMoisAndCount()
+router.get(`${ROADS.DU_MOIS}`, async (req, res) => {
     try {
 
         // On détermine le début du mois

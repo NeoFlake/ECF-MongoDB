@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Billet from "../models/Billet.js";
 import Vol from "../models/Vol.js";
-import Passager from "../models/Passager.js";
+import { ROADS } from "../constantes/roads.js";
 
 const router = Router();
 
@@ -320,36 +320,6 @@ router.get(`${ROADS.CONFIRME}${ROADS.CA_GENERE}`, async (req, res) => {
             }
         ]);
         res.status(201).json(caGenere);
-    } catch (err) {
-        res.status(400).json({ erreur: err.message });
-    }
-});
-
-// Route pour renvoyer les billets vendu pour la classe la plus vendue -> getByClasseMostSelled()
-router.get(`${ROADS.CLASSE}${ROADS.PLUS_VENDUE}`, async (req, res) => {
-    try {
-        const billets = await Billet.aggregate([
-            {
-                $group : {
-                    _id: "$classe",
-                    nombreBillets: { $sum: 1 }
-                }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    classe: "$_id",
-                    nombreBillets: 1
-                }
-            },
-            {
-                $sort: { nombreBillets: -1 }
-            },  
-            {
-                $limit: 1
-            }
-        ]);
-        res.status(201).json(billets);
     } catch (err) {
         res.status(400).json({ erreur: err.message });
     }

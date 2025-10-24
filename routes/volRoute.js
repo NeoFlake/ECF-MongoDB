@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Vol from "../models/Vol.js";
-import ROADS from "../public/constantes/roads.js";
+import ROADS from "../constantes/roads.js";
 
 const router = Router();
 
@@ -27,7 +27,7 @@ router.get(`${ROADS.ROOT}:id`, async (req, res) => {
     }
 });
 
-// Route pour renvoyer les avions par son numero de vol -> getByNumeroVOl()
+// Route pour renvoyer les avions par son numero de vol -> getByNumeroVol()
 router.get(`${ROADS.NUMERO_VOL}`, async (req, res) => {
     try {
         const vols = await Vol.find({ numeroVol: req.body.numeroVol });

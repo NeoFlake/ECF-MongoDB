@@ -34,6 +34,7 @@ const ROADS = {
     PLUS_VENDUE: "/plusvendue",
     COMPTER: "/compter",
     CONFIRME: "/confirme",
+    DU_MOIS: "/dumois",
     ANNULE: "/annule",
     TOTAL_PASSAGER: "/totalpassager",
     TOTAL_BILLET_VENDU: "/totalbilletvendu",
